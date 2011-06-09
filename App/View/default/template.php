@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl; ?>css/framework.css"/>
 	<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl; ?>css/formbuilder.css"/>	
 	<link rel="stylesheet" type="text/css" href="<?php echo $baseUrl; ?>css/style.css"/>
-	<script type="text/javascript" language="javascript" src="<?php echo $baseUrl; ?>scripts/jquery1.4.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $baseUrl; ?>scripts/jquery1.4.2.min.js"></script>
 	<script type="text/javascript">var baseUrl = "<?php echo $baseUrl; ?>";</script>
 	<?php include_once($viewDir . 'framework/javascript.php'); ?>
 	<?php include_once($viewDir . 'framework/stylesheet.php'); ?>
