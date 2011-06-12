@@ -106,7 +106,7 @@ class APP_Model_Ticket extends APP_Model_Application {
     }
     function getTicket(array $p_aParams = array()) {
 		$github = new Github_Client();
-	    $ticket = $github->getIssueApi()->show('dragoonis', 'ppi-framework', $p_aParams['id']);
+	    $ticket = $github->getIssueApi()->show('dragoonis', isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework', $p_aParams['id']);
 //	    ppi_dump($ticket); exit;
 
 		$ticket['id'] = $ticket['number'];
@@ -117,7 +117,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 	    $ticket['content'] = $ticket['body'];
 		$user = $github->getUserApi()->show($ticket['user']);
 		$ticket['user_fullname'] = $user['name'];
-	    $ticket['repo_name'] = 'ppi-framework';
+	    $ticket['repo_name'] = isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework';
 
 	    return $ticket;
 /*
