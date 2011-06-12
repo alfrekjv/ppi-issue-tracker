@@ -24,11 +24,11 @@
 						$urlTitle = str_replace(' ', '-', $ticket['title']);
 					?>
 						<tr>
-						<td class="num"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $urlTitle ?>" title=""><?php echo $ticket['id']; ?></a></td>
-						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
-						<td class="ttstate"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['status']); ?></a></td>
-						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $urlTitle; ?>" title=""><?php echo ucwords(str_replace('_', ' ', $ticket['ticket_type']));?></a></td>
-						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['severity']);?></a></td>
+a></td>
+						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
+						<td class="ttstate"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['status']); ?></a></td>
+						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucwords(str_replace('_', ' ', $ticket['ticket_type']));?></a></td>
+						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['severity']);?></a></td>
 						<td><a href="http://github.com/<?php echo $ticket['username']; ?>" title="" target="_blank"><?php echo $ticket['user_fullname'];?></a></td>
 						</tr>
 					<?php endforeach;?>
