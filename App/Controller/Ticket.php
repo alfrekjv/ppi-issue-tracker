@@ -45,7 +45,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 			throw new PPI_Exception('Unable to find ticket data');
 		}
 		$oComment  = new APP_Model_Ticket_Comment();
-		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id']));
+		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo));
 
 		$this->addStylesheet(array('shThemeDefault.css'));
 		$this->addJavascript(array('highlight.pack.js'));
