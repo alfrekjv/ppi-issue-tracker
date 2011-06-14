@@ -15,9 +15,9 @@
 			</div>
 			<?php endif; ?>
 			<h1 style="font-size: 16px; margin-bottom: 12px;"><?php echo $aTicket['title']; ?></h1>
-			<p class="date">Reported by <?php echo $aTicket['user_fullname']; ?>&nbsp;|
+			<p class="date">Reported by <a href="https://github.com/<?php echo $aTicket['username']; ?>" target="_blank"><?php echo $aTicket['user_fullname']; ?></a>&nbsp;|
                 &nbsp;<?php echo $aTicket['created']; ?>
-    			<?php echo $aTicket['user_fullname'] != '' ? '| Assigned to: ' . $aTicket['user_fullname'] : ''; ?>
+    			<?php echo $aTicket['user_fullname']  != '' ? '| Assigned to: <a href="https://github.com/' . $aTicket['username'] . '" target="_blank">' . $aTicket['user_fullname'] . '</a>' : ''; ?>
 			</p>
 			<div style="margin-top: 25px;" class="ticket-content"><?php echo nl2br($aTicket['content']); ?></div>
 		</div>
