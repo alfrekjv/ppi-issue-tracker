@@ -31,16 +31,19 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 
 	    $tickets = $ticket->getTickets($aTicketParams);
 		$this->addStylesheet('ticket-table.css');
-		$this->load('ticket/index', compact('tickets', 'sFilter'));
+		$this->load('ticket/index', compact('tickets', 'sFilter', 'aTicketParams'));
 	}
 
 	public function view() {
+		$id = $this->get('view');
+		$repo = $this->get($id);
+
 		$iTicketID = $this->get('view', 0);
 		if($iTicketID < 1) {
 			throw new PPI_Exception('Invalid Ticket ID');
 		}
 		$oTicket = new APP_Model_Ticket();
-		$aTicket = $oTicket->getTicket(array('id' => $iTicketID));
+		$aTicket = $oTicket->getTicket(array('id' => $iTicketID, 'repo' => $repo));
 		if(count($aTicket) == 0) {
 			throw new PPI_Exception('Unable to find ticket data');
 		}
@@ -50,7 +53,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$this->addStylesheet(array('shThemeDefault.css'));
 		$this->addJavascript(array('highlight.pack.js'));
 
-		$this->load('ticket/view', compact('aTicket', 'aComments'));
+		$this->load('ticket/view', compact('aTicket', 'aComments', 'repo'));
 	}
 
 	public function create() {
