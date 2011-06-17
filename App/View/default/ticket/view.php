@@ -1,6 +1,6 @@
 <div class="wrap" style="margin-top: 20px;">
     <a href="<?php echo $baseUrl; ?>">Home</a>&nbsp;
-    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo str_replace(' ', '-', $aTicket['repo_name']);?>"><?php echo $aTicket['repo_name'];?></a></span>
+    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo str_replace(' ', '-', $repo);?>"><?php echo $repo;?></a></span>
 	&raquo;&nbsp;<span><strong><?php echo $aTicket['title']; ?></strong></span>
 </div>
 
