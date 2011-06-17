@@ -9,7 +9,18 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
 	}
     
     function getComments(array $p_aParams = array()) {
-
+		$github = new Github_Client();
+	    $comments = $github->getIssueApi()->getComments('dragoonis', isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework', $p_aParams['ticket_id']);
+	    foreach($comments as $key =>$comment) {
+	    	$user = $github->getUserApi()->show($comment['user']);
+			$comment['username'] = $user['name'];
+			$comment['login'] = $user['login'];
+			$comment['created'] = $comment['created_at'];
+			$comment['content'] = $comment['body'];
+			$comments[$key] = $comment;
+		}
+    
+		/*
     	if(!isset($p_aParams['ticket_id'])) {
     		throw new PPI_Exception('Missing ticket_id');
     	}
@@ -20,8 +31,7 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
     		->where('c.ticket_id = ' . $this->quote($p_aParams['ticket_id']))
     		->order('c.created DESC')
     		->getList();
-    	
+    	*/
 		return $comments; 	
     }
-	
 }
