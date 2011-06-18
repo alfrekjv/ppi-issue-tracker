@@ -1,9 +1,14 @@
-RewriteEngine on
-Options +FollowSymLinks
+<IfModule mod_rewrite.c>
 
-#RewriteBase /
+	RewriteEngine on
+	Options +FollowSymLinks
 
-RewriteRule ^controllers$ docs/controllers
+	#RewriteBase /
 
-RewriteCond %{REQUEST_URI} !css|scripts|images|install|rewrite.log|download.tar|database.sql
-RewriteRule .* index.php
+	RewriteRule ^controllers$ docs/controllers
+
+	RewriteCond %{REQUEST_URI} !css|scripts|images|install|rewrite.log|download.tar|database.sql
+	RewriteRule .* index.php
+</IfModule>
+
+FileETag none
