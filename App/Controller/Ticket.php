@@ -5,7 +5,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$filter = $this->get('filter', '');
 		$ticket  = new APP_Model_Ticket();
 		$aTicketParams = array();
-		
+
 		// If we're filtering by cat
 		if($filter === 'cat' && ($repo = $this->get($filter, '')) !== '') {
 		    $aTicketParams['filter_type'] = 'cat';
@@ -26,7 +26,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		    $aTicketParams['filter'] = $version;
 		    $sFilter = 'version ' . $version;
 		}
-		
+
 		$aTicketParams['repo'] = $repo;
 
 	    $tickets = $ticket->getTickets($aTicketParams);
@@ -50,8 +50,8 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$oComment  = new APP_Model_Ticket_Comment();
 		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo));
 
-		$this->addStylesheet(array('shThemeDefault.css'));
-		$this->addJavascript(array('highlight.pack.js'));
+		$this->addCSS('shThemeDefault.css');
+		$this->addJS('highlight.pack.js');
 
 		$this->load('ticket/view', compact('aTicket', 'aComments', 'repo'));
 	}
