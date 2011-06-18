@@ -107,7 +107,6 @@ class APP_Model_Ticket extends APP_Model_Application {
     function getTicket(array $p_aParams = array()) {
 		$github = new Github_Client();
 	    $ticket = $github->getIssueApi()->show('dragoonis', isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework', $p_aParams['id']);
-//	    ppi_dump($ticket); exit;
 
 		$ticket['id'] = $ticket['number'];
 		$ticket['status'] = $ticket['state'];
@@ -116,37 +115,12 @@ class APP_Model_Ticket extends APP_Model_Application {
 	    $ticket['created'] = $ticket['created_at'];
 	    $ticket['content'] = $ticket['body'];
 		$user = $github->getUserApi()->show($ticket['user']);
+	    $ticket['username'] = $user['login'];
 		$ticket['user_fullname'] = $user['name'];
 	    $ticket['repo_name'] = isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework';
 
 	    return $ticket;
-/*
-		$tickets = $this->select()
-					->columns('t.*, u.first_name user_fn, u.last_name user_ln, uu.first_name user_assigned_fn, uu.last_name user_assigned_ln, c.title category_name')
-					->from($this->getTableName() . ' t')
-					->leftJoin('ticket_category c', 't.category_id = c.id')
-					->leftJoin('users u', 't.user_id=u.id')
-					->leftJoin('users uu', 't.assigned_user_id=uu.id');
 
-		if(isset($p_aParams['keyword']) && $p_aParams['keyword'] != '') {
-			$sSecureSearchKeyword = $this->quote('%'. $p_aParams['keyword'] .'%');
-			$aOrWhere             = array(
-				't.id = '           . $sSecureSearchKeyword,
-				't.title LIKE '     . $sSecureSearchKeyword,
-				'ticket_type LIKE ' . $sSecureSearchKeyword,
-				't.severity LIKE '  . $sSecureSearchKeyword,
-				't.status LIKE '    . $sSecureSearchKeyword
-			);
-			$tickets = $tickets->where(implode(' OR ', $aOrWhere));
-		}
-
-		$tickets = $tickets
-			->where('t.id = ' . $this->quote($p_aParams['id']))
-			->order('created desc')
-			->getList()->fetch();
-		return $tickets;
-
- */
     }
 
     function getVersionsForFormStructure() {
