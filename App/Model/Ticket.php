@@ -112,7 +112,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 		$ticket['status'] = $ticket['state'];
 		$ticket['ticket_type'] = 'bug';
 		$ticket['severity'] = 'major';
-	    $ticket['created'] = $ticket['created_at'];
+	    $ticket['created'] = date('F j, Y, g:i a', strtotime($ticket['created_at']));
 	    $ticket['content'] = $ticket['body'];
 		$user = $github->getUserApi()->show($ticket['user']);
 	    $ticket['username'] = $user['login'];
