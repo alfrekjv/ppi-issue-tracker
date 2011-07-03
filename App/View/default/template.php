@@ -7,7 +7,7 @@
 	<?php include_once($viewDir . 'framework/javascript.php'); ?>
 	<?php include_once($viewDir . 'framework/stylesheet.php'); ?>
 	<title>PPI framework | Open Source PHP Framework</title>
-	
+
 	<style type="text/css">
 #wrapper {
 margin:0 auto;
@@ -16,7 +16,7 @@ text-align:left;
 width:985px;
 margin-bottom: 200px;
 }
-	</style>	
+	</style>
 </head>
 
 <body>
@@ -24,13 +24,13 @@ margin-bottom: 200px;
 		<header>
 
 			<div class="wrap">
-				
+
 				<div id="logo">
 					<h1>PPI framework</h1>
 					<span>Open Source PHP Framewo rk</span>
 				</div>
 				<nav>
-			
+
 				<ul>
 					<li class="img"><a href="#"><img src="images/icons/home.png" alt="Home" title="Home"/></a></li>
 					<li><a href="#" class="current">Activity</a></li>
@@ -44,7 +44,7 @@ margin-bottom: 200px;
 					<li><a href="#">Wiki</a></li>
 					<li><a href="#">Track</a></li>
 				</ul>
-				
+
 			</nav>
 			</div>
 		</header>
@@ -56,7 +56,7 @@ margin-bottom: 200px;
 				<ul>
 					<li><a href="<?php echo $baseUrl; ?>" title="Home">Home</a></li>
 					<?php if($isLoggedIn): ?>
-					<li><a href="<?php echo $baseUrl; ?>ticket/create" title="Logout">Create ticket</a></li>
+<!--					<li><a href="--><?php //echo $baseUrl; ?><!--ticket/create" title="Logout">Create ticket</a></li>-->
 					<li><a href="<?php echo $baseUrl; ?>ticket/index/filter/mine" title="Logout">My Tickets</a></li>
 					<li><a href="<?php echo $baseUrl; ?>user/logout" title="Logout">Logout</a></li>
 					<li style="float: right;"><span>Greetings, <?php echo $authInfo['first_name']; ?></span></li>
@@ -64,18 +64,18 @@ margin-bottom: 200px;
 					<li><a href="<?php echo $baseUrl; ?>user/login" title="Login">Login</a></li>
 					<li><a href="<?php echo $baseUrl; ?>user/register" title="Login">Sign up</a></li>
 					<?php endif; ?>
-				
+
 				</ul>
-			</header>		
-		
+			</header>
+
 		<?php include $viewDir . "framework/flashmessage.php" ?>
 		<?php include_once($viewDir . $actionFile); ?>
 		</div>
 
-		
-		
+
+
 	</body>
-</html> 
+</html>
 <?php } else { ?>
 			<?php include_once($viewDir . $actionFile); ?>
 <?php } ?>
