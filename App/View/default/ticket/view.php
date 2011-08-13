@@ -37,7 +37,7 @@
 			<?php foreach($aComments as $comment): ?>
 			<div class="comment" style="margin: 20px; padding-bottom: 20px; border-bottom: 1px solid #E0E0E0;">
 				<p class="date">
-				    <a href="https://github.com/<?php echo $comment['login']; ?>" target="_blank"><?php echo $comment['username']; ?></a>&nbsp;|&nbsp;Created: <?php echo $comment['created']; ?></p>
+				    <a href="https://github.com/<?php echo $comment['login']; ?>" target="_blank"><?php echo $comment['username']; ?></a>&nbsp;|&nbsp;Created: <?php echo $comment['created']; ?>&nbsp;|&nbsp;<a href="#permalink-for-comment-<?php echo $comment['id']; ?>" name="permalink-for-comment-<?php echo $comment['id']; ?>">Permalink</a></p>
 				<div style="margin-top: 25px;" class="ticket-content"><?php echo nl2br($comment['content']); ?></div>
 			</div>
 			<?php endforeach; ?>
