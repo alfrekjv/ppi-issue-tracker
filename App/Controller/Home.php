@@ -4,9 +4,9 @@ class APP_Controller_Home extends APP_Controller_Application {
 	function index() {
 		$oTicket = new APP_Model_Ticket();
 		$oTicketCat = new APP_Model_Ticket_Category();
-		$cRepos = $this->getConfig()->repos->toArray();
+		$customRepos = $this->getConfig()->repos->toArray();
         $repos = array();
-		foreach($cRepos as $key => $repo) {
+		foreach($customRepos as $key => $repo) {
 			list($user, $repoName) = explode(':', $repo, 2);
             $repos[$key]["repoName"] = $repoName;
             $repos[$key]["user"] = $user;
