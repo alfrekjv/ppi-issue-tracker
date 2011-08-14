@@ -4,11 +4,14 @@ class APP_Controller_Home extends APP_Controller_Application {
 	function index() {
 		$oTicket = new APP_Model_Ticket();
 		$oTicketCat = new APP_Model_Ticket_Category();
-		$repos = $this->getConfig()->repos->toArray();
-		foreach($repos as $key => $repo) {
+		$cRepos = $this->getConfig()->repos->toArray();
+        $repos = array();
+		foreach($cRepos as $key => $repo) {
 			list($user, $repoName) = explode(':', $repo, 2);
-			$repos[$key] = $repoName;
+            $repos[$key]["repoName"] = $repoName;
+            $repos[$key]["user"] = $user;
 		}
+        
 		$this->addStylesheet('ticket-table.css');
 		$this->load('home/index', compact('tickets', 'repos'));
 	}

@@ -28,6 +28,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		}
 
 		$aTicketParams['repo'] = $repo;
+        $aTicketParams['username'] = $this->get("username");
 
 	    $tickets = $ticket->getTickets($aTicketParams);
 		$this->addStylesheet('ticket-table.css');
@@ -35,20 +36,21 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 	}
 
 	public function view() {
-		$id = $this->get('view');
-		$repo = $this->get($id);
+		$id       = $this->get('view');
+		$repo     = $this->get($id);
+        $username = $this->get("username");
 
 		$iTicketID = $this->get('view', 0);
 		if($iTicketID < 1) {
 			throw new PPI_Exception('Invalid Ticket ID');
 		}
 		$oTicket = new APP_Model_Ticket();
-		$aTicket = $oTicket->getTicket(array('id' => $iTicketID, 'repo' => $repo));
+		$aTicket = $oTicket->getTicket(array('id' => $iTicketID, 'repo' => $repo,'username'=>$username));
 		if(count($aTicket) == 0) {
 			throw new PPI_Exception('Unable to find ticket data');
 		}
 		$oComment  = new APP_Model_Ticket_Comment();
-		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo));
+		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo, 'username' => $username));
 
 		$this->addCSS('shThemeDefault.css');
 		$this->addJS('highlight.pack.js');

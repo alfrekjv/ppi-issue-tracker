@@ -57,7 +57,7 @@
 					<?php if(count($repos) > 0): ?>
 				 		<?php foreach($repos as $repo):?>
 							<tr>
-								<td><a href="<?php echo $baseUrl; ?>ticket/index/filter/cat/<?php echo str_replace(' ', '-', $repo); ?>"><?php echo $repo; ?></a></td>
+								<td><a href="<?php echo $baseUrl; ?>ticket/index/filter/cat/<?php echo str_replace(' ', '-', $repo["repoName"]); ?>/username/<?=$repo["user"];?>"><?php echo $repo["repoName"]; ?></a></td>
 							</tr>
 						<?php endforeach;?>
 					<?php else:?>

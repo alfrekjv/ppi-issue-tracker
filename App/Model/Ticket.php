@@ -50,7 +50,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 
 	function getTickets(array $p_aParams = array()) {
 		$github = new Github_Client();
-		$tickets = $github->getIssueApi()->getList('dragoonis', $p_aParams['repo'], 'open');
+		$tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
 
 		foreach($tickets as $key => $ticket) {
 			$ticket['id'] = $ticket['number'];
@@ -68,7 +68,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 
 	function getTicket(array $p_aParams = array()) {
 		$github = new Github_Client();
-		$ticket = $github->getIssueApi()->show('dragoonis', $p_aParams['repo'], $p_aParams['id']);
+		$ticket = $github->getIssueApi()->show($p_aParams["username"], $p_aParams['repo'], $p_aParams['id']);
 
 		$ticket['id'] = $ticket['number'];
 		$ticket['status'] = $ticket['state'];
