@@ -57,12 +57,5 @@ class APP_Model_Application extends PPI_Model {
 		}
 		return date($sDateFormat, (int) $p_iTimestamp);
 	}
-
-    function getGithubUsername() {
-        return $this->getConfig()->custom->github_username;
-    }
-
-    function getGithubRepoName() {
-        return $this->getConfig()->custom->default_repo;
-    }
+    
 }

@@ -50,13 +50,5 @@ class APP_Controller_Application extends PPI_Controller {
 		$this->getSession()->set('PPI_Login::returnUrl', $this->getFullUrl());
 		$this->redirect('user/login');
 	}
-
-    function getGithubUsername() {
-        return $this->getConfig()->custom->github_username;
-    }
-
-    function getGithubRepoName() {
-        return $this->getConfig()->custom->default_repo;
-    }
     
 }
