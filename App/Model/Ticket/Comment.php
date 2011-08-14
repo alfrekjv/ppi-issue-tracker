@@ -17,6 +17,7 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
 			$comment['login']    = $user['login'];
 			$comment['created']  = $comment['created_at'];
 			$comment['content']  = $comment['body'];
+			$comment['id']       = $key;
 			$comments[$key]      = $comment;
 		}
 		return $comments;
