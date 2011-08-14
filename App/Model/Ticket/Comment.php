@@ -1,119 +1,50 @@
 <?php
-class APP_Model_Ticket extends APP_Model_Application {
-	protected $_table = 'ticket';
+class APP_Model_Ticket_Comment extends APP_Model_Application {
+	protected $_table = 'ticket_comment';
 	protected $_primary = 'id';
 
 	function __construct() {
 		parent::__construct($this->_table, $this->_primary);
 	}
 
-	function getAddEditFormStructure($p_sMode = 'create', array $p_aOptions = array()) {
-	$structure = array(
-		'fields' => array(
-		'title'            	    => array('type' => 'text', 'label' => 'Title', 'size' => 60),
-		'category_id'           => array('type' => 'dropdown', 'label' => 'Category', 'options' => array()),
-		'ticket_type'           => array('type' => 'dropdown', 'label' => 'Type', 'options' => array()),
-		'severity'              => array('type' => 'dropdown', 'label' => 'Severity', 'options' => array()),
-		'status'                => array('type' => 'dropdown', 'label' => 'Status', 'options' => array()),
-		'version'               => array('type' => 'dropdown', 'label' => 'Version', 'options' => array()),
-		'assigned_user_id'      => array('type' => 'dropdown', 'label' => 'Assign', 'options' => array()),
-		'content'               => array('type' => 'textarea', 'label' => 'Description', 'rows' => 10, 'cols' => 40),
-		'submit'                => array('type' => 'submit', 'label' => '', 'value' => 'Create Ticket'),
-		),
-		'rules' => array(
-			'title' => array('type' => 'required', 'message' => 'Title cannot be blank'),
-			'content' => array('type' => 'required', 'message' => 'You must enter a description')
-		)
-	);
-
-		if(isset($p_aOptions['isAdmin']) && $p_aOptions['isAdmin'] === false) {
-			unset($structure['fields']['assigned_user_id']);
-			unset($structure['fields']['severity']);
-			unset($structure['fields']['status']);
-			unset($structure['fields']['version']);
-		} else {
-			$structure['fields']['severity']['options']         = array('minor' => 'minor','major' => 'major','critical' => 'critical');
-			$structure['fields']['status']['options']           = array('open' => 'open', 'assigned' => 'assigned', 'closed' => 'closed');
-			$oUser                                              = new APP_Model_User();
-			$oTicket                                            = new APP_Model_Ticket();
-			$structure['fields']['version']['options']          = $this->convertGetListToDropdown($oTicket->getVersionsForFormStructure(), 'version');
-			$structure['fields']['assigned_user_id']['options'] = $this->convertGetListToDropdown($oUser->getList(), array('first_name', ' ', 'last_name'));
-		}
-
-		$oTicketCat = new APP_Model_Ticket_Category();
-		$structure['fields']['ticket_type']['options']      = array('feature_request' => 'Feature request','bug' => 'Bug', 'enhancement' => 'Enhancement');
-		$structure['fields']['category_id']['options']      = $this->convertGetListToDropdown($oTicketCat->getList(), 'title');
-
-		return $structure;
-	}
-
-	function getTickets(array $p_aParams = array()) {
+	function getComments(array $p_aParams = array()) {
 		$github = new Github_Client();
-		$tickets = $github->getIssueApi()->getList('dragoonis', $p_aParams['repo'], 'open');
+		$comments = $github->getIssueApi()->getComments('dragoonis', isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework', $p_aParams['ticket_id']);
 
-		foreach($tickets as $key => $ticket) {
-			$ticket['id'] = $ticket['number'];
-			$ticket['status'] = $ticket['state'];
-			$ticket['ticket_type'] = 'bug';
-			$ticket['severity'] = 'major';
-			$user = $github->getUserApi()->show($ticket['user']);
-			$ticket['user_fullname'] = $user['name'];
-			$ticket['username'] = $user['login'];
-			$tickets[$key] = $ticket;
+		foreach($comments as $key =>$comment) {
+			$user                = $github->getUserApi()->show($comment['user']);
+			$comment['username'] = isset($user['name']) ? $user['name'] : $user['login'];
+			$comment['login']    = $user['login'];
+			$comment['created']  = $comment['created_at'];
+
+			if (extension_loaded('sundown')) {
+				$sundown = new Sundown($comment['body'],array(
+											"filter_html"=>true,
+											"no_image"=>true,
+											"no_links"=>true,
+											"filter_styles"=>true,
+											"safelink" => true,
+											"generate_toc" => true,
+											"hard_wrap" => true,
+											"gh_blockcode" => true,
+											"xhtml" => true,
+											"autolink"=>true,
+											"no_intraemphasis" => true,
+											"tables" => true,
+											"fenced_code" => true,
+											"strikethrough" => true,
+											"lax_htmlblock" => true,
+											"space_header" => true,
+									));
+
+				$comment['content']  = $sundown->to_html();
+			} else {
+				$comment['content']  = $comment['body'];
+			}
+
+			$comment['id']       = $key;
+			$comments[$key]      = $comment;
 		}
-
-		return $tickets;
-	}
-
-	function getTicket(array $p_aParams = array()) {
-		$github = new Github_Client();
-		$ticket = $github->getIssueApi()->show('dragoonis', $p_aParams['repo'], $p_aParams['id']);
-
-		$ticket['id'] = $ticket['number'];
-		$ticket['status'] = $ticket['state'];
-		$ticket['ticket_type'] = 'bug';
-		$ticket['severity'] = 'major';
-		$ticket['created'] = date('F j, Y, g:i a', strtotime($ticket['created_at']));
-
-		if (extension_loaded('sundown')) {
-			$sundown = new Sundown($ticket['body'],array(
-										"filter_html"=>true,
-										"no_image"=>true,
-										"no_links"=>true,
-										"filter_styles"=>true,
-										"safelink" => true,
-										"generate_toc" => true,
-										"hard_wrap" => true,
-										"gh_blockcode" => true,
-										"xhtml" => true,
-										"autolink"=>true,
-										"no_intraemphasis" => true,
-										"tables" => true,
-										"fenced_code" => true,
-										"strikethrough" => true,
-										"lax_htmlblock" => true,
-										"space_header" => true,
-								));
-
-			$ticket['content']  = $sundown->to_html();
-		} else {
-			$ticket['content']  = $ticket['body'];
-		}
-
-		$user = $github->getUserApi()->show($ticket['user']);
-		$ticket['username'] = $user['login'];
-		$ticket['user_fullname'] = isset($user['name']) ? $user['name'] : $user['login'];
-		$ticket['repo_name'] = $p_aParams['repo'];
-
-		return $ticket;
-	}
-
-	function getVersionsForFormStructure() {
-		return $this->select()
-		->columns('id, version')
-		->from($this->_table)
-		->order('version')
-		->group('version')
-		->getList();
+		return $comments;
 	}
 }
