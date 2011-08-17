@@ -48,7 +48,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 			throw new PPI_Exception('Invalid Ticket ID');
 		}
 		$oTicket = new APP_Model_Ticket();
-		$aTicket = $oTicket->getTicket(array('id' => $iTicketID, 'repo' => $repo,'username'=>$username));
+		$aTicket = $oTicket->getTicket(array('id' => $iTicketID, 'repo' => $repo,'username' => $username));
 		if(count($aTicket) == 0) {
 			throw new PPI_Exception('Unable to find ticket data');
 		}
@@ -56,7 +56,6 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo, 'username' => $username));
 
 		$this->addCSS('ticket');
-		$this->addJS('highlight.pack.js');
 
 		$this->load('ticket/view', compact('aTicket', 'aComments', 'repo', 'username'));
 	}

@@ -25,26 +25,26 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
 			$comment['created']  = $comment['created_at'];
 
 			if (extension_loaded('sundown')) {
-				$sundown = new Sundown($comment['body'],array(
-											"filter_html"=>true,
-											"no_image"=>true,
-											"no_links"=>true,
-											"filter_styles"=>true,
-											"safelink" => true,
-											"generate_toc" => true,
-											"hard_wrap" => true,
-											"gh_blockcode" => true,
-											"xhtml" => true,
-											"autolink"=>true,
-											"no_intraemphasis" => true,
-											"tables" => true,
-											"fenced_code" => true,
-											"strikethrough" => true,
-											"lax_htmlblock" => true,
-											"space_header" => true,
-									));
-
+				$sundown = new Sundown($comment['body'], array(
+					"filter_html"=>true,
+					"no_image"=>true,
+					"no_links"=>true,
+					"filter_styles"=>true,
+					"safelink" => true,
+					"generate_toc" => true,
+					"hard_wrap" => true,
+					"gh_blockcode" => true,
+					"xhtml" => true,
+					"autolink"=>true,
+					"no_intraemphasis" => true,
+					"tables" => true,
+					"fenced_code" => true,
+					"strikethrough" => true,
+					"lax_htmlblock" => true,
+					"space_header" => true,
+				));
 				$comment['content']  = $sundown->to_html();
+
 			} else {
 				$comment['content']  = $comment['body'];
 			}

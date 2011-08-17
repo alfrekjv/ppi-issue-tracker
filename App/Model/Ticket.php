@@ -61,6 +61,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 		$tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
 
 		foreach($tickets as $key => $ticket) {
+
 			$ticket['id'] = $ticket['number'];
 			$ticket['status'] = $ticket['state'];
 			$ticket['ticket_type'] = 'bug';
@@ -68,6 +69,29 @@ class APP_Model_Ticket extends APP_Model_Application {
 			$user = $github->getUserApi()->show($ticket['user']);
 			$ticket['user_fullname'] = $user['name'];
 			$ticket['username'] = $user['login'];
+
+			if (extension_loaded('sundown')) {
+				$sundown = new Sundown($ticket['body'], array(
+					"filter_html"=>true,
+					"no_image"=>true,
+					"no_links"=>true,
+					"filter_styles"=>true,
+					"safelink" => true,
+					"generate_toc" => true,
+					"hard_wrap" => true,
+					"gh_blockcode" => true,
+					"xhtml" => true,
+					"autolink"=>true,
+					"no_intraemphasis" => true,
+					"tables" => true,
+					"fenced_code" => true,
+					"strikethrough" => true,
+					"lax_htmlblock" => true,
+					"space_header" => true,
+				));
+				$ticket['body'] = $sundown->to_html();
+			}
+
 			$tickets[$key] = $ticket;
 		}
 
@@ -94,24 +118,24 @@ class APP_Model_Ticket extends APP_Model_Application {
 		$ticket['created'] = date('F j, Y, g:i a', strtotime($ticket['created_at']));
 
 		if (extension_loaded('sundown')) {
-			$sundown = new Sundown($ticket['body'],array(
-										"filter_html"=>true,
-										"no_image"=>true,
-										"no_links"=>true,
-										"filter_styles"=>true,
-										"safelink" => true,
-										"generate_toc" => true,
-										"hard_wrap" => true,
-										"gh_blockcode" => true,
-										"xhtml" => true,
-										"autolink"=>true,
-										"no_intraemphasis" => true,
-										"tables" => true,
-										"fenced_code" => true,
-										"strikethrough" => true,
-										"lax_htmlblock" => true,
-										"space_header" => true,
-								));
+			$sundown = new Sundown($ticket['body'], array(
+				"filter_html"=>true,
+				"no_image"=>true,
+				"no_links"=>true,
+				"filter_styles"=>true,
+				"safelink" => true,
+				"generate_toc" => true,
+				"hard_wrap" => true,
+				"gh_blockcode" => true,
+				"xhtml" => true,
+				"autolink"=>true,
+				"no_intraemphasis" => true,
+				"tables" => true,
+				"fenced_code" => true,
+				"strikethrough" => true,
+				"lax_htmlblock" => true,
+				"space_header" => true,
+			));
 
 			$ticket['content']  = $sundown->to_html();
 		} else {
