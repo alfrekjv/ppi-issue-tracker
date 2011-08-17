@@ -14,11 +14,11 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		}
 
 		// If we're filtering by 'mine'
-		if($filter === 'mine' && $this->isLoggedIn() === true) {
+		/*if($filter === 'mine' && $this->isLoggedIn() === true) {
 			$aTicketParams['filter_type'] = 'mine';
 			$aTicketParams['filter'] = $this->getAuthData(false)->id;
 			$sFilter = 'mine';
-		}
+		}*/
 
 		// If we're filtering by version
 		if($filter === 'version' && ($version = $this->get($filter)) !== '') {

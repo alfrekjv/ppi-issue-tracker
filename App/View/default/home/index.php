@@ -1,8 +1,5 @@
 <article class="content-box home">
     <?php if($isLoggedIn): ?>
-    <div class="" style="position: absolute; top: 12px; right: 20px;">
-    <button type="submit"><span class="button green" id="create-ticket-button">Create ticket</span></button>
-    </div>
     <?php endif; ?>
     <p class="title">Select a project</p>
     <ul>

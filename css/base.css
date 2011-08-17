@@ -610,3 +610,22 @@ section div { border: 1px solid red;}
     color: #000;
     padding: 20px;
 }
+
+.header-container .header-middle span nav {
+	padding:  25px 5px 0 0;
+}
+
+.header-container .header-middle span nav a {
+	color: #406c6c;
+	text-decoration: none;
+	padding: 5px;
+}
+
+.header-container .header-middle span nav a:hover {
+	background: #406c6c;
+	color: #fff;
+}
+
+.header-container .header-middle span nav span {
+	color: #536464;
+}
