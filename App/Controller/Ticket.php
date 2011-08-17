@@ -39,6 +39,9 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$id       = $this->get('view');
 		$repo     = $this->get($id);
         $username = $this->get("username");
+		if($username === '') {
+			throw new PPI_Exception('Invalid Username');
+		}
 
 		$iTicketID = $this->get('view', 0);
 		if($iTicketID < 1) {
@@ -52,10 +55,10 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		$oComment  = new APP_Model_Ticket_Comment();
 		$aComments = $oComment->getComments(array('ticket_id' => $aTicket['id'], 'repo' => $repo, 'username' => $username));
 
-		$this->addCSS('shThemeDefault.css');
+		$this->addCSS('ticket');
 		$this->addJS('highlight.pack.js');
 
-		$this->load('ticket/view', compact('aTicket', 'aComments', 'repo'));
+		$this->load('ticket/view', compact('aTicket', 'aComments', 'repo', 'username'));
 	}
 
 	public function create() {

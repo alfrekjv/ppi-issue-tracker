@@ -1,14 +1,14 @@
 <div class="wrap" style="margin-top: 20px;">
     <a href="<?php echo $baseUrl; ?>">Home</a>&nbsp;
-    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo str_replace(' ', '-', $repo);?>"><?php echo $repo;?></a></span>
-	&raquo;&nbsp;<span><strong><?php echo $aTicket['title']; ?></strong></span>
+    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo $repo; ?>/username/<?= $username; ?>"><?php echo $repo;?></a></span>
+	&raquo;&nbsp;<span style="font-size: 1.0em;"><?php echo $aTicket['title']; ?></span>
 </div>
 
 
-<section class="content-box" style="margin-top: 25px; padding: 25px; text-align: left;">
+<section class="content-box" style="margin-top: 12px; padding: 25px; text-align: left;">
 	<div class="ticket">
 		<div class="ticket-info rel" style="position: relative;">
-			<div class="ticket-num abs" style="position: absolute; top: 15px; right: 50px;"><h1 style="font-size: 18px;">#<?php echo $aTicket['id']; ?></h1></div>
+			<div class="ticket-num abs"><h1 style="font-size: 18px;">#<?php echo $aTicket['id']; ?></h1></div>
 			<?php if($isLoggedIn && $authInfo['role_name'] !== 'member'): ?>
 			<div class="ticket-edit-icon" style="position: absolute; top: 1px; right: 5px;">
 			    <a href="<?php echo $baseUrl; ?>ticket/edit/<?php echo $aTicket['id']; ?>" title="Edit Ticket"><img src="<?php echo $baseUrl; ?>images/ticket_edit.png" alt="Edit Ticket"></a>
@@ -35,7 +35,7 @@
 		<div class="comment-list rel">
 			<h1 style="font-size: 16px; margin-bottom: 12px;">Comments to this ticket : </h1>
 			<?php foreach($aComments as $comment): ?>
-			<div class="comment content-box" style="margin: 20px; padding-bottom: 20px; border-bottom: 1px solid #E0E0E0;">
+			<div class="comment content-box" style="padding-bottom: 20px;">
 				<p class="date">
 				    <a href="https://github.com/<?php echo $comment['login']; ?>" target="_blank"><?php echo $comment['username']; ?></a>&nbsp;|&nbsp;Created: <?php echo $comment['created']; ?>&nbsp;|&nbsp;<a href="#permalink-for-comment-<?php echo $comment['id']; ?>" name="permalink-for-comment-<?php echo $comment['id']; ?>">Permalink</a></p>
 				<div style="margin-top: 25px;" class="ticket-content"><?php echo nl2br($comment['content']); ?></div>
@@ -52,39 +52,6 @@
 			<input type="hidden" name="ticket_id" value="<?php echo $aTicket['id']; ?>" />
 			<button id="create_ticket" type="submit"><span class="button green">Comment</span></button>
 		</form>
-		<script src="<?php echo $baseUrl; ?>scripts/tinymce/tiny_mce.js" type="text/javascript"></script>
-		<script language="javascript" type="text/javascript">
-		    tinyMCE.init({
-		        mode: "textareas",
-		        theme: "advanced",
-		        skin: "o2k7",
-		        skin_variant: "black",
-		        theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull|,bullist,numlist,outdent,indent,undo,redo,link,unlink,anchor,hr,removeformat,|,codehighlighting",
-		        theme_advanced_buttons2: "",
-		        theme_advanced_buttons3: "",
-		        theme_advanced_buttons3_add_before: "codehighlighting",
-		        theme_advanced_resizing : true,
-		        theme_advanced_toolbar_location : "top",
-		        plugins: "codehighlighting"
-		    });
-		    jQuery(document).ready(function() {
-		    	$('#create-comment-form').submit(function() {
-		    		tinyMCE.triggerSave();
-		    		if(jQuery.trim($('#comment_content').val()) == "") {
-		    			alert('You must enter a comment to continue.');
-		    			return false;
-		    		}
-		    	});
-
-
-		    });
-
-		</script>
-		<?php else: ?>
-		<p style="margin: 5px; margin-left: 0;">You must be logged in to post comments. Click here to <a href="<?php echo $baseUrl; ?>user/login" title="Sign in">Sign in</a> or <a href="<?php echo $baseUrl; ?>user/register">Register</a></p>
 		<?php endif; ?>
-		<script type="text/javascript">
-		hljs.initHighlightingOnLoad();
-		</script>
 	</div>
 </section>

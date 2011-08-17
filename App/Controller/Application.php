@@ -17,7 +17,7 @@ class APP_Controller_Application extends PPI_Controller {
 	 */
 	function isAdminLoggedIn() {
 		$aAuthData = $this->getAuthData();
-		return (isset($aAuthData['role_name']) 
+		return (isset($aAuthData['role_name'])
 			&& ($aAuthData['role_name'] == 'administrator' || $aAuthData['role_name'] == 'developer'));
 	}
 
@@ -41,7 +41,7 @@ class APP_Controller_Application extends PPI_Controller {
 			$this->loginRedirect();
 		}
 	}
-	
+
 	/**
 	 * Redirect to the login page, saving the return url in the session
 	 *
@@ -50,5 +50,14 @@ class APP_Controller_Application extends PPI_Controller {
 		$this->getSession()->set('PPI_Login::returnUrl', $this->getFullUrl());
 		$this->redirect('user/login');
 	}
-    
+
+	/**
+	 * Get the cache object
+	 *
+	 * @return PPI_Cache
+	 */
+	function getCache() {
+		return PPI_Helper::getCache();
+	}
+
 }

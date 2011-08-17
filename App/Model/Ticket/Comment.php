@@ -8,6 +8,13 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
 	}
 
 	function getComments(array $p_aParams = array()) {
+
+		$cacheName = 'comments' . md5(serialize($p_aParams));
+		$cache = $this->getCache();
+		if($cache->exists($cacheName)) {
+			return $cache->get($cacheName);
+		}
+
 		$github = new Github_Client();
 		$comments = $github->getIssueApi()->getComments($p_aParams['username'], isset($p_aParams['repo']) ? $p_aParams['repo'] : 'ppi-framework', $p_aParams['ticket_id']);
 
@@ -45,6 +52,9 @@ class APP_Model_Ticket_Comment extends APP_Model_Application {
 			$comment['id']       = $key;
 			$comments[$key]      = $comment;
 		}
+
+		$cache->set($cacheName, $comments, 300);
+
 		return $comments;
 	}
 }

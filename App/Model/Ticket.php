@@ -52,31 +52,38 @@ class APP_Model_Ticket extends APP_Model_Application {
 
         $cache = $this->getCache();
         $cacheName = 'tickets' . md5(serialize($p_aParams));
-        
-        if ($cache->exists($cacheName)) {
-            $tickets = $cache->get($cacheName);
-        } else {
-            $github = new Github_Client();
-            $tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
 
-            foreach($tickets as $key => $ticket) {
-                $ticket['id'] = $ticket['number'];
-                $ticket['status'] = $ticket['state'];
-                $ticket['ticket_type'] = 'bug';
-                $ticket['severity'] = 'major';
-                $user = $github->getUserApi()->show($ticket['user']);
-                $ticket['user_fullname'] = $user['name'];
-                $ticket['username'] = $user['login'];
-                $tickets[$key] = $ticket;
-            }
-            
-            $cache->set($cacheName, $tickets, 300);
+		if($cache->exists($cacheName)) {
+            return $tickets = $cache->get($cacheName);
         }
+
+		$github = new Github_Client();
+		$tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
+
+		foreach($tickets as $key => $ticket) {
+			$ticket['id'] = $ticket['number'];
+			$ticket['status'] = $ticket['state'];
+			$ticket['ticket_type'] = 'bug';
+			$ticket['severity'] = 'major';
+			$user = $github->getUserApi()->show($ticket['user']);
+			$ticket['user_fullname'] = $user['name'];
+			$ticket['username'] = $user['login'];
+			$tickets[$key] = $ticket;
+		}
+
+		$cache->set($cacheName, $tickets, 300);
 
 		return $tickets;
 	}
 
 	function getTicket(array $p_aParams = array()) {
+
+		$cacheName = 'tickets' . md5(serialize($p_aParams));
+		$cache = $this->getCache();
+		if($cache->exists($cacheName)) {
+			return $cache->get($cacheName);
+		}
+
 		$github = new Github_Client();
 		$ticket = $github->getIssueApi()->show($p_aParams["username"], $p_aParams['repo'], $p_aParams['id']);
 
@@ -115,6 +122,8 @@ class APP_Model_Ticket extends APP_Model_Application {
 		$ticket['username'] = $user['login'];
 		$ticket['user_fullname'] = isset($user['name']) ? $user['name'] : $user['login'];
 		$ticket['repo_name'] = $p_aParams['repo'];
+
+		$cache->set($cacheName, $ticket, 300);
 
 		return $ticket;
 	}
