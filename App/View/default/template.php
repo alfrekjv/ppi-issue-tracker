@@ -1,81 +1,33 @@
-<?php if(!isset($isAjax) || $isAjax == false) { ?>
+<?php
+if(isset($isAjax) && $isAjax == false):
+	include_once($viewDir . $actionFile);
+else:
+?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-	<script type="text/javascript">var baseUrl = "<?php echo $baseUrl; ?>";</script>
-	<?php include_once($viewDir . 'framework/javascript.php'); ?>
-	<?php include_once($viewDir . 'framework/stylesheet.php'); ?>
-	<title>PPI framework | Open Source PHP Framework</title>
-
-	<style type="text/css">
-#wrapper {
-margin:0 auto;
-position:relative;
-text-align:left;
-width:985px;
-margin-bottom: 200px;
-}
-	</style>
-</head>
-
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<?php include($viewDir . 'elements/head.php'); ?>
 <body>
-<!--
-		<header>
-
-			<div class="wrap">
-
-				<div id="logo">
-					<h1>PPI framework</h1>
-					<span>Open Source PHP Framewo rk</span>
-				</div>
-				<nav>
-
-				<ul>
-					<li class="img"><a href="#"><img src="images/icons/home.png" alt="Home" title="Home"/></a></li>
-					<li><a href="#" class="current">Activity</a></li>
-					<li><a href="#">Issues</a>
-						<ul>
-							<li><a href="#">Forums</a></li>
-							<li><a href="#">Credits</a></li>
-						</ul>
-					</li>
-					<li><a href="#">News</a></li>
-					<li><a href="#">Wiki</a></li>
-					<li><a href="#">Track</a></li>
-				</ul>
-
-			</nav>
-			</div>
-		</header>
-		-->
-
-		<div id="wrapper" style="">
-
-			<header class="box_shadow">
-				<ul>
-					<li><a href="<?php echo $baseUrl; ?>" title="Home">Home</a></li>
-					<?php if($isLoggedIn): ?>
-<!--					<li><a href="--><?php //echo $baseUrl; ?><!--ticket/create" title="Logout">Create ticket</a></li>-->
-					<li><a href="<?php echo $baseUrl; ?>ticket/index/filter/mine" title="Logout">My Tickets</a></li>
-					<li><a href="<?php echo $baseUrl; ?>user/logout" title="Logout">Logout</a></li>
-					<li style="float: right;"><span>Greetings, <?php echo $authInfo['first_name']; ?></span></li>
-					<?php else: ?>
-					<li><a href="<?php echo $baseUrl; ?>user/login" title="Login">Login</a></li>
-					<li><a href="<?php echo $baseUrl; ?>user/register" title="Login">Sign up</a></li>
-					<?php endif; ?>
-
-				</ul>
-			</header>
-
-		<?php include $viewDir . "framework/flashmessage.php" ?>
-		<?php include_once($viewDir . $actionFile); ?>
-		</div>
-
-
-
-	</body>
-</html>
-<?php } else { ?>
+<?php include($viewDir . 'elements/header.php'); ?>
+<div id="wrapper">
+    <section class="main-content-container">
+	    <!-- .main-content-contrainer-inner -->
+        <div class="main-content-container-inner">
+            <div class="header-separator"><div class="fl green-2"></div><div class="fl green-3"></div><div class="fl green-4"></div></div>
+	        <!-- .main-content -->
+            <div class="fl main-content">
 			<?php include_once($viewDir . $actionFile); ?>
-<?php } ?>
+            </div>
+	        <!-- /.main-content -->
+        </div>
+	    <!-- /.main-content-contrainer-inner -->
+    </section>
+</div> <!-- #wrapper -->
+</body>
+</html>
+<?php
+endif;
+?>

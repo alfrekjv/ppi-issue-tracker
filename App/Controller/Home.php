@@ -2,6 +2,8 @@
 class APP_Controller_Home extends APP_Controller_Application {
 
 	function index() {
+
+        $this->addjs('home');
 		$oTicket = new APP_Model_Ticket();
 		$oTicketCat = new APP_Model_Ticket_Category();
 		$customRepos = $this->getConfig()->repos->toArray();

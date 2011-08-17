@@ -57,5 +57,8 @@ class APP_Model_Application extends PPI_Model {
 		}
 		return date($sDateFormat, (int) $p_iTimestamp);
 	}
-    
+
+    function getCache() {
+        return PPI_Helper::getCache();
+    }
 }
