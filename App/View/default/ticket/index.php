@@ -4,7 +4,7 @@
 </div>
 
 <div class="wrap" style="margin-top: 20px;">
-	<article class="box_1">
+	<article class="content-box">
 		<table class="issues" id="ticket_list_table" cellspacing="0" cellpadding="0">
 			<thead>
 			   </tr>

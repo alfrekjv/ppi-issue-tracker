@@ -576,3 +576,38 @@ section div { border: 1px solid red;}
 .item-container {
     zoom: 1;
 }
+
+.home {
+    padding: 25px;
+    width: 915px;
+    text-align: left;
+    position: relative;
+}
+
+.home .title {
+    color: #fff;
+    font-size: 11pt;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.main-content a {
+    color: #8cd94e;
+    text-decoration: none;
+}
+
+.home ul li a {
+    color: #8cd94e;
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.home ul li a:hover, .main-content a:hover {
+    color: #609f2c;
+}
+
+.header-container .header-middle span {
+    color: #000;
+    padding: 20px;
+}

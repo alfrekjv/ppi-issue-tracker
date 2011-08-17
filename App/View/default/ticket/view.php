@@ -5,7 +5,7 @@
 </div>
 
 
-<section class="box_1" style="margin-top: 25px; padding: 25px; text-align: left;">
+<section class="content-box" style="margin-top: 25px; padding: 25px; text-align: left;">
 	<div class="ticket">
 		<div class="ticket-info rel" style="position: relative;">
 			<div class="ticket-num abs" style="position: absolute; top: 15px; right: 50px;"><h1 style="font-size: 18px;">#<?php echo $aTicket['id']; ?></h1></div>
@@ -29,13 +29,13 @@
 	</div>
 </section>
 
-<section class="box_1" style="margin-top: 25px; padding: 25px; text-align: left;">
+<section class="content-box" style="margin-top: 25px; padding: 25px; text-align: left;">
 	<div class="comment" style="">
 		<?php if(count($aComments) > 0): ?>
 		<div class="comment-list rel">
 			<h1 style="font-size: 16px; margin-bottom: 12px;">Comments to this ticket : </h1>
 			<?php foreach($aComments as $comment): ?>
-			<div class="comment" style="margin: 20px; padding-bottom: 20px; border-bottom: 1px solid #E0E0E0;">
+			<div class="comment content-box" style="margin: 20px; padding-bottom: 20px; border-bottom: 1px solid #E0E0E0;">
 				<p class="date">
 				    <a href="https://github.com/<?php echo $comment['login']; ?>" target="_blank"><?php echo $comment['username']; ?></a>&nbsp;|&nbsp;Created: <?php echo $comment['created']; ?>&nbsp;|&nbsp;<a href="#permalink-for-comment-<?php echo $comment['id']; ?>" name="permalink-for-comment-<?php echo $comment['id']; ?>">Permalink</a></p>
 				<div style="margin-top: 25px;" class="ticket-content"><?php echo nl2br($comment['content']); ?></div>

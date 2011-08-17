@@ -49,19 +49,29 @@ class APP_Model_Ticket extends APP_Model_Application {
 	}
 
 	function getTickets(array $p_aParams = array()) {
-		$github = new Github_Client();
-		$tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
 
-		foreach($tickets as $key => $ticket) {
-			$ticket['id'] = $ticket['number'];
-			$ticket['status'] = $ticket['state'];
-			$ticket['ticket_type'] = 'bug';
-			$ticket['severity'] = 'major';
-			$user = $github->getUserApi()->show($ticket['user']);
-			$ticket['user_fullname'] = $user['name'];
-			$ticket['username'] = $user['login'];
-			$tickets[$key] = $ticket;
-		}
+        $cache = $this->getCache();
+        $cacheName = 'tickets' . md5(serialize($p_aParams));
+        
+        if ($cache->exists($cacheName)) {
+            $tickets = $cache->get($cacheName);
+        } else {
+            $github = new Github_Client();
+            $tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
+
+            foreach($tickets as $key => $ticket) {
+                $ticket['id'] = $ticket['number'];
+                $ticket['status'] = $ticket['state'];
+                $ticket['ticket_type'] = 'bug';
+                $ticket['severity'] = 'major';
+                $user = $github->getUserApi()->show($ticket['user']);
+                $ticket['user_fullname'] = $user['name'];
+                $ticket['username'] = $user['login'];
+                $tickets[$key] = $ticket;
+            }
+            
+            $cache->set($cacheName, $tickets, 300);
+        }
 
 		return $tickets;
 	}
