@@ -338,8 +338,8 @@ section.main-content-container {
 }
 
 .main-content {
-    padding-top: 20px;
-    width: 1000px;
+    padding: 20px;
+    width: 960px;
     background-color: #222324;
 }
 
@@ -579,7 +579,6 @@ section div { border: 1px solid red;}
 
 .home {
     padding: 25px;
-    width: 915px;
     text-align: left;
     position: relative;
 }

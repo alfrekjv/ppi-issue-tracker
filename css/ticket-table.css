@@ -1,5 +1,5 @@
 table {
-        width: 916px; 
+        width: 916px;
         border-spacing: 0;
         border-collapse: separate;
 }
@@ -53,4 +53,7 @@ td.issue {
 width: 40%;
 }
 
-.issues th, .issues td { padding: 10px; }
+.issues th, .issues td {
+	padding: 10px;
+	font-size: 0.8em;
+}
