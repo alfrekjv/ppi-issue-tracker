@@ -28,7 +28,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 		}
 
 		$aTicketParams['repo'] = $repo;
-        $aTicketParams['username'] = $this->get("username");
+		$aTicketParams['username'] = $this->getConfig()->custom->login_github;
 
 	    $tickets = $ticket->getTickets($aTicketParams);
 		$this->addStylesheet('ticket-table.css');
