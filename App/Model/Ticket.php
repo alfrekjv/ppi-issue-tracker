@@ -58,13 +58,18 @@ class APP_Model_Ticket extends APP_Model_Application {
         }
 
 		$github = new Github_Client();
-		$tickets = $github->getIssueApi()->getList($p_aParams["username"], $p_aParams['repo'], 'open');
+
+		$tickets = array();
+		
+		foreach($this->getConfig()->custom->labels as $label) {
+			$tickets += $github->getIssueApi()->searchLabel($p_aParams["username"], $p_aParams['repo'], $label);
+		}
 
 		foreach($tickets as $key => $ticket) {
 
 			$ticket['id'] = $ticket['number'];
 			$ticket['status'] = $ticket['state'];
-			$ticket['ticket_type'] = !empty($ticket['labels']) && $ticket['labels'][0] != 'discussion' ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
+			$ticket['ticket_type'] = !empty($ticket['labels']) ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
 			$ticket['severity'] = 'major';
 			$user = $github->getUserApi()->show($ticket['user']);
 			$ticket['user_fullname'] = $user['name'];
