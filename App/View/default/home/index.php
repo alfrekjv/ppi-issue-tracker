@@ -6,7 +6,7 @@
     <?php
         if(count($repos) > 0) {
             foreach($repos as $repo) {
-                echo "<li><a href='".$baseUrl."ticket/index/filter/cat/". str_replace(' ', '-', $repo["repoName"])."/username/".$repo["user"]."'>".$repo["repoName"]."</a></li>";
+                echo "<li><a href='".$baseUrl."ticket/index/filter/cat/". str_replace(' ', '-', $repo["repoName"])."'>".$repo["repoName"]."</a></li>";
             }
         } else {
             echo 'No Categories present.';
