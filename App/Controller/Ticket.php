@@ -38,7 +38,7 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 	public function view() {
 		$id       = $this->get('view');
 		$repo     = $this->get($id);
-        $username = $this->get("username");
+        	$username = $this->getConfig()->custom->login_github;
 		if($username === '') {
 			throw new PPI_Exception('Invalid Username');
 		}
