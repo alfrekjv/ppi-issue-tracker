@@ -48,51 +48,57 @@ class APP_Model_Ticket extends APP_Model_Application {
 		return $structure;
 	}
 
-	function getTickets(array $p_aParams = array()) {
+	function getTickets(array $params = array()) {
 
-        $cache = $this->getCache();
-        $cacheName = 'tickets' . md5(serialize($p_aParams));
+		$cache = $this->getCache();
+		$cacheName = 'tickets' . md5(serialize($params));
 
 		if($cache->exists($cacheName)) {
-            return $tickets = $cache->get($cacheName);
-        }
+			return $cache->get($cacheName);
+		}
 
-		$github = new Github_Client();
-
+		$github  = new Github_Client();
 		$tickets = array();
-		
+
 		foreach($this->getConfig()->custom->labels as $label) {
-			$tickets += $github->getIssueApi()->searchLabel($p_aParams["username"], $p_aParams['repo'], $label);
+			try {
+				$tmpIssues = $github->getIssueApi()->searchLabel($params["username"], $params['repo'], $label);
+
+				foreach($tmpIssues as $tmpIssue) {
+					$tickets[] = $tmpIssue;
+				}
+			} catch(Github_HttpClient_Exception $e) {
+			}
 		}
 
 		foreach($tickets as $key => $ticket) {
 
-			$ticket['id'] = $ticket['number'];
-			$ticket['status'] = $ticket['state'];
-			$ticket['ticket_type'] = !empty($ticket['labels']) ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
-			$ticket['severity'] = 'major';
-			$user = $github->getUserApi()->show($ticket['user']);
+			$ticket['id']            = $ticket['number'];
+			$ticket['status']        = $ticket['state'];
+			$ticket['ticket_type']   = !empty($ticket['labels']) ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
+			$ticket['severity']      = 'major';
+			$user                    = $github->getUserApi()->show($ticket['user']);
 			$ticket['user_fullname'] = $user['name'];
-			$ticket['username'] = $user['login'];
+			$ticket['username']      = $user['login'];
 
 			if (extension_loaded('sundown')) {
 				$sundown = new Sundown($ticket['body'], array(
-					"filter_html"=>true,
-					"no_image"=>true,
-					"no_links"=>true,
-					"filter_styles"=>true,
-					"safelink" => true,
-					"generate_toc" => true,
-					"hard_wrap" => true,
-					"gh_blockcode" => true,
-					"xhtml" => true,
-					"autolink"=>true,
-					"no_intraemphasis" => true,
-					"tables" => true,
-					"fenced_code" => true,
-					"strikethrough" => true,
-					"lax_htmlblock" => true,
-					"space_header" => true,
+					"filter_html"       => true,
+					"no_image"          => true,
+					"no_links"          => true,
+					"filter_styles"     => true,
+					"safelink"          => true,
+					"generate_toc"      => true,
+					"hard_wrap"         => true,
+					"gh_blockcode"      => true,
+					"xhtml"             => true,
+					"autolink"          => true,
+					"no_intraemphasis"  => true,
+					"tables"            => true,
+					"fenced_code"       => true,
+					"strikethrough"     => true,
+					"lax_htmlblock"     => true,
+					"space_header"      => true
 				));
 				$ticket['body'] = $sundown->to_html();
 			}

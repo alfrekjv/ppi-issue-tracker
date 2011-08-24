@@ -1,6 +1,6 @@
-<div class="wrap" style="margin-top: 20px;">
+<div class="wrap">
     <a href="<?php echo $baseUrl; ?>">Home</a>&nbsp;
-    &raquo;&nbsp;<span>Filter tickets by: <strong><?php echo $sFilter; ?></strong></span>
+    &raquo;&nbsp;<span>Filter tickets by: <strong><?php echo $filter; ?></strong></span>
 </div>
 
 <div class="wrap" style="margin-top: 20px;">
@@ -16,7 +16,6 @@
 				<th>Assigned To</th>
 			   </tr>
 			</thead>
-
 			<tbody>
 				<?php if(count($tickets) > 0): ?>
 					<?php
@@ -25,10 +24,10 @@
 					?>
 						<tr>
 						<td><?php echo $ticket['id']; ?></td>
-						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] .'/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
-						<td class="ttstate"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['status']); ?></a></td>
-						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucwords(str_replace('_', ' ', $ticket['ticket_type']));?></a></td>
-						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['severity']);?></a></td>
+						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $ticketParams['repo'] .'/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
+						<td class="ttstate"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $ticketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['status']); ?></a></td>
+						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $ticketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucwords(str_replace('_', ' ', $ticket['ticket_type']));?></a></td>
+						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $ticketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['severity']);?></a></td>
 						<td><a href="http://github.com/<?php echo $ticket['username']; ?>" title="" target="_blank"><?php echo $ticket['user_fullname'];?></a></td>
 						</tr>
 					<?php endforeach;?>

@@ -1,4 +1,4 @@
-<div class="wrap" style="margin-top: 20px;">
+<div class="wrap">
     <a href="<?php echo $baseUrl; ?>">Home</a>&nbsp;
     &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo $repo; ?>"><?php echo $repo;?></a></span>
 	&raquo;&nbsp;<span style="font-size: 1.0em;"><?php echo $aTicket['title']; ?></span>
@@ -16,8 +16,8 @@
 			<?php endif; ?>
 			<h1 style="font-size: 16px; margin-bottom: 12px;"><?php echo $aTicket['title']; ?></h1>
 			<p class="date">Reported by <a href="https://github.com/<?php echo $aTicket['username']; ?>" target="_blank"><?php echo $aTicket['user_fullname']; ?></a>&nbsp;|
-                &nbsp;<?php echo $aTicket['created']; ?>
-    			<?php echo $aTicket['user_fullname']  != '' ? '| Assigned to: <a href="https://github.com/' . $aTicket['username'] . '" target="_blank">' . $aTicket['user_fullname'] . '</a>' : ''; ?>
+				&nbsp;<?php echo $aTicket['created']; ?>
+				<?php echo $aTicket['user_fullname']  != '' ? '| Assigned to: <a href="https://github.com/' . $aTicket['username'] . '" target="_blank">' . $aTicket['user_fullname'] . '</a>' : ''; ?>
 			</p>
 			<div style="margin-top: 25px;" class="ticket-content"><?php echo nl2br($aTicket['content']); ?></div>
 		</div>

@@ -3,14 +3,17 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 
 	public function index() {
 		$filter = $this->get('filter', '');
-		$ticket  = new APP_Model_Ticket();
-		$aTicketParams = array();
+		$tickets = array();
 
 		// If we're filtering by cat
 		if($filter === 'cat' && ($repo = $this->get($filter, '')) !== '') {
-		    $aTicketParams['filter_type'] = 'cat';
-		    $aTicketParams['filter'] = str_replace('-', ' ', $repo);
-		    $sFilter = str_replace('-', ' ', $this->get($filter));
+			$ticketParams['filter_type'] = 'cat';
+			$ticketParams['filter']      = str_replace('-', ' ', $repo);
+			$filter                      = str_replace('-', ' ', $this->get($filter));
+			$ticketParams['repo']        = $repo;
+			$ticketParams['username']    = $this->getConfig()->custom->login_github;
+			$ticket                      = new APP_Model_Ticket();
+			$tickets                     = $ticket->getTickets($ticketParams);
 		}
 
 		// If we're filtering by 'mine'
@@ -20,25 +23,14 @@ class APP_Controller_Ticket extends APP_Controller_Application {
 			$sFilter = 'mine';
 		}*/
 
-		// If we're filtering by version
-		if($filter === 'version' && ($version = $this->get($filter)) !== '') {
-		    $aTicketParams['filter_type'] = 'version';
-		    $aTicketParams['filter'] = $version;
-		    $sFilter = 'version ' . $version;
-		}
-
-		$aTicketParams['repo'] = $repo;
-		$aTicketParams['username'] = $this->getConfig()->custom->login_github;
-
-	    $tickets = $ticket->getTickets($aTicketParams);
 		$this->addStylesheet('ticket-table.css');
-		$this->load('ticket/index', compact('tickets', 'sFilter', 'aTicketParams'));
+		$this->load('ticket/index', compact('tickets', 'filter', 'ticketParams'));
 	}
 
 	public function view() {
 		$id       = $this->get('view');
 		$repo     = $this->get($id);
-        	$username = $this->getConfig()->custom->login_github;
+		$username = $this->getConfig()->custom->login_github;
 		if($username === '') {
 			throw new PPI_Exception('Invalid Username');
 		}
