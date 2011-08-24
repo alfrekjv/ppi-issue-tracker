@@ -1,6 +1,6 @@
 <div class="wrap" style="margin-top: 20px;">
     <a href="<?php echo $baseUrl; ?>">Home</a>&nbsp;
-    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo $repo; ?>/username/<?= $username; ?>"><?php echo $repo;?></a></span>
+    &raquo;&nbsp;<span><a href="<?php echo $baseUrl;?>ticket/index/filter/cat/<?php echo $repo; ?>"><?php echo $repo;?></a></span>
 	&raquo;&nbsp;<span style="font-size: 1.0em;"><?php echo $aTicket['title']; ?></span>
 </div>
 
