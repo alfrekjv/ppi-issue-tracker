@@ -11,7 +11,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 	function getAddEditFormStructure($p_sMode = 'create', array $p_aOptions = array()) {
 	$structure = array(
 		'fields' => array(
-		'title'            	    => array('type' => 'text', 'label' => 'Title', 'size' => 60),
+		'title'                 => array('type' => 'text', 'label' => 'Title', 'size' => 60),
 		'category_id'           => array('type' => 'dropdown', 'label' => 'Category', 'options' => array()),
 		'ticket_type'           => array('type' => 'dropdown', 'label' => 'Type', 'options' => array()),
 		'severity'              => array('type' => 'dropdown', 'label' => 'Severity', 'options' => array()),
@@ -63,7 +63,6 @@ class APP_Model_Ticket extends APP_Model_Application {
 		foreach($this->getConfig()->custom->labels as $label) {
 			try {
 				$tmpIssues = $github->getIssueApi()->searchLabel($params["username"], $params['repo'], $label);
-
 				foreach($tmpIssues as $tmpIssue) {
 					$tickets[] = $tmpIssue;
 				}
@@ -114,7 +113,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 	function getTicket(array $p_aParams = array()) {
 
 		$cacheName = 'tickets' . md5(serialize($p_aParams));
-		$cache = $this->getCache();
+		$cache     = $this->getCache();
 		if($cache->exists($cacheName)) {
 			return $cache->get($cacheName);
 		}
@@ -122,30 +121,30 @@ class APP_Model_Ticket extends APP_Model_Application {
 		$github = new Github_Client();
 		$ticket = $github->getIssueApi()->show($p_aParams["username"], $p_aParams['repo'], $p_aParams['id']);
 
-		$ticket['id'] = $ticket['number'];
-		$ticket['status'] = $ticket['state'];
+		$ticket['id']          = $ticket['number'];
+		$ticket['status']      = $ticket['state'];
 		$ticket['ticket_type'] = 'bug';
-		$ticket['severity'] = 'major';
-		$ticket['created'] = date('F j, Y, g:i a', strtotime($ticket['created_at']));
+		$ticket['severity']    = 'major';
+		$ticket['created']     = date('F j, Y, g:i a', strtotime($ticket['created_at']));
 
 		if (extension_loaded('sundown')) {
 			$sundown = new Sundown($ticket['body'], array(
-				"filter_html"=>true,
-				"no_image"=>true,
-				"no_links"=>true,
-				"filter_styles"=>true,
-				"safelink" => true,
-				"generate_toc" => true,
-				"hard_wrap" => true,
-				"gh_blockcode" => true,
-				"xhtml" => true,
-				"autolink"=>true,
-				"no_intraemphasis" => true,
-				"tables" => true,
-				"fenced_code" => true,
-				"strikethrough" => true,
-				"lax_htmlblock" => true,
-				"space_header" => true,
+				"filter_html"       => true,
+				"no_image"          => true,
+				"no_links"          => true,
+				"filter_styles"     => true,
+				"safelink"          => true,
+				"generate_toc"      => true,
+				"hard_wrap"         => true,
+				"gh_blockcode"      => true,
+				"xhtml"             => true,
+				"autolink"          => true,
+				"no_intraemphasis"  => true,
+				"tables"            => true,
+				"fenced_code"       => true,
+				"strikethrough"     => true,
+				"lax_htmlblock"     => true,
+				"space_header"      => true
 			));
 
 			$ticket['content']  = $sundown->to_html();
@@ -153,10 +152,10 @@ class APP_Model_Ticket extends APP_Model_Application {
 			$ticket['content']  = $ticket['body'];
 		}
 
-		$user = $github->getUserApi()->show($ticket['user']);
-		$ticket['username'] = $user['login'];
+		$user                    = $github->getUserApi()->show($ticket['user']);
+		$ticket['username']      = $user['login'];
 		$ticket['user_fullname'] = isset($user['name']) ? $user['name'] : $user['login'];
-		$ticket['repo_name'] = $p_aParams['repo'];
+		$ticket['repo_name']     = $p_aParams['repo'];
 
 		$cache->set($cacheName, $ticket, 300);
 
