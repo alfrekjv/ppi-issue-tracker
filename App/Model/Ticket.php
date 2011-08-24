@@ -64,7 +64,7 @@ class APP_Model_Ticket extends APP_Model_Application {
 
 			$ticket['id'] = $ticket['number'];
 			$ticket['status'] = $ticket['state'];
-			$ticket['ticket_type'] = sizeof($ticket['labels']) ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
+			$ticket['ticket_type'] = !empty($ticket['labels']) ? ucfirst(strtolower($ticket['labels'][0])) : 'Unknown';
 			$ticket['severity'] = 'major';
 			$user = $github->getUserApi()->show($ticket['user']);
 			$ticket['user_fullname'] = $user['name'];
