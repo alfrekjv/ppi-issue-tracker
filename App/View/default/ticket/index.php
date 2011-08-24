@@ -25,7 +25,7 @@
 					?>
 						<tr>
 						<td><?php echo $ticket['id']; ?></td>
-						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] .'/' . $urlTitle. '/username/'.$aTicketParams["username"].'/'; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
+						<td class="" style="text-align: left;"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] .'/' . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['title']);?></a></td>
 						<td class="ttstate"><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['status']); ?></a></td>
 						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucwords(str_replace('_', ' ', $ticket['ticket_type']));?></a></td>
 						<td><a href="<?php echo $baseUrl . 'ticket/view/' . $ticket['id'] . '/' . $aTicketParams['repo'] . '/'  . $urlTitle; ?>" title=""><?php echo ucfirst($ticket['severity']);?></a></td>
